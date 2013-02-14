@@ -3,10 +3,10 @@ import json
 import re
 
 from bs4 import BeautifulSoup
-
+from collections import OrderedDict
 
 def get_header_json(soup):
-	headers = dict()
+	headers = OrderedDict()
 	print "Names of all browser versions:\n"
 	for name in soup.select("#liste > h4"):
 		print name.text;
@@ -33,7 +33,7 @@ header_urls = {
 	"Safari" : "http://www.useragentstring.com/pages/Safari/"
 }
 
-browsers = dict()
+browsers = OrderedDict()
 
 for key, value in header_urls.items():
 	soup = BeautifulSoup(urllib2.urlopen(value).read())
@@ -41,6 +41,6 @@ for key, value in header_urls.items():
 
 
 with open('headers.json', 'wb') as fp:
-	json.dump(browsers, fp, indent=4)
+	json.dump(browsers, fp, indent=4, sort_keys=False)
 
 
