@@ -41,6 +41,7 @@ for key, value in header_urls.items():
 
 
 with open('headers.json', 'wb') as fp:
+	print "Generating header.json for browsers: ", browsers.keys()
 	json.dump(browsers, fp, indent=4, sort_keys=False)
 
 
