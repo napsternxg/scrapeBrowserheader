@@ -19,7 +19,7 @@ def get_header_json(soup):
 
 		headers[header_version] = []
 		user_agents = []
-		for header in name.next_sibling.select(" a"):
+		for header in name.next_sibling.select("li > a"):
 			user_agents.append(header.text)
 		headers[header_version] = user_agents
 	print "All Browser Info:\n"
