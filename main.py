@@ -1,5 +1,6 @@
 import urllib2
 import json
+import re
 
 from bs4 import BeautifulSoup
 
@@ -9,12 +10,22 @@ def get_header_json(soup):
 	print "Names of all browser versions:\n"
 	for name in soup.select("#liste > h4"):
 		print name.text;
-		headers[name.text] = []
+		regex = re.compile("[\d+\.]+[\w\d]+")
+		match_str = regex.search(name.text)	
+		if match_str is None:
+			header_version = "0.0"
+		else:
+			header_version = match_str.group(0)
+
+		headers[header_version] = []
+		user_agents = []
 		for header in name.next_sibling.select(" a"):
-			headers[name.text].append(header.text)
+			user_agents.append(header.text)
+		headers[header_version] = user_agents
 	print "All Browser Info:\n"
 	print json.dumps(headers)
 	return headers
+
 header_urls = {
 	"IE" : "http://www.useragentstring.com/pages/Internet%20Explorer/", 
 	"Firefox": "http://www.useragentstring.com/pages/Firefox/",
